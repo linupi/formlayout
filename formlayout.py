@@ -51,45 +51,15 @@ STDERR = sys.stderr
 _modname = os.environ.setdefault('QT_API', 'pyqt')
 assert _modname in ('pyqt', 'pyqt5', 'pyside')
 
-if os.environ['QT_API'].startswith('pyqt'):
-    try:
-        if os.environ['QT_API'] == 'pyqt5':
-            import PyQt5  # analysis:ignore
-        else:
-            import PyQt4  # analysis:ignore
-    except ImportError:
-        # Switching to PySide
-        os.environ['QT_API'] = _modname = 'pyside'
-        try:
-            import PySide  # analysis:ignore
-        except ImportError:
-            raise ImportError("formlayout requires PyQt4, PyQt5 or PySide")
-
-if os.environ['QT_API'] == 'pyqt':
-    try:
-        from PyQt4.QtGui import QFormLayout
-    except ImportError:
-        raise ImportError("formlayout requires PyQt4, PyQt5 or PySide")
-    from PyQt4.QtGui import *  # analysis:ignore
-    from PyQt4.QtCore import *  # analysis:ignore
-    from PyQt4.QtCore import pyqtSlot as Slot
-    from PyQt4.QtCore import pyqtProperty as Property
-    QT_LIB = 'PyQt4'
-
-if os.environ['QT_API'] == 'pyqt5':
-    from PyQt5.QtWidgets import *  # analysis:ignore
-    from PyQt5.QtGui import *  # analysis:ignore
-    from PyQt5.QtCore import *  # analysis:ignore
-    from PyQt5.QtCore import pyqtSignal as Signal  # analysis:ignore
-    from PyQt5.QtCore import pyqtSlot as Slot  # analysis:ignore
-    from PyQt5.QtCore import pyqtProperty as Property  # analysis:ignore
-    SIGNAL = None  # analysis:ignore
-    QT_LIB = 'PyQt5'
-
-if os.environ['QT_API'] == 'pyside':
-    from PySide.QtGui import *  # analysis:ignore
-    from PySide.QtCore import *  # analysis:ignore
-    QT_LIB = 'PySide'
+import PyQt5
+from PyQt5.QtWidgets import *  # analysis:ignore
+from PyQt5.QtGui import *  # analysis:ignore
+from PyQt5.QtCore import *  # analysis:ignore
+from PyQt5.QtCore import pyqtSignal as Signal  # analysis:ignore
+from PyQt5.QtCore import pyqtSlot as Slot  # analysis:ignore
+from PyQt5.QtCore import pyqtProperty as Property  # analysis:ignore
+SIGNAL = None  # analysis:ignore
+QT_LIB = 'PyQt5'
 
 
 # ---+- Python 2-3 compatibility -+----
